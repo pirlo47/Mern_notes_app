@@ -1,10 +1,12 @@
 import express from "express";
 
+import dotenv from "dotenv"
+import cors from "cors"
+
+ 
 import notesRoutes from "./routes/notesRoutes.js";
 import { connectDB } from "./config/db.js";
 import rateLimiter  from  "./middleware/rateLimiter.js"
-import dotenv from "dotenv"
-
 
 
 dotenv.config()
@@ -23,8 +25,7 @@ app.use(express.json()); //this middleware will parse JSON bodies: req.body
 
 app.use(rateLimiter);
 
-//Adding custom middleware 
-//app.use()
+app.use(cors);
 
 // Use the route "/api/notes"
 app.use("/api/notes", notesRoutes);
@@ -35,3 +36,4 @@ connectDB().then(() => {
         console.log("Server started on PORT:", PORT);
     });
 }); 
+
